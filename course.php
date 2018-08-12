@@ -8,6 +8,7 @@
     $doc = new DOMDocument();
     $doc->load( 'https://apiservice.mol.gov.tw/OdService/download/A17000000J-000007-yrg' ); 
     $tables=$doc->getElementsByTagName("Table1");
+    //echo "<button type='button' onclick='updateData()'>Update Data!</button>";
     echo "<table border='3'><tr><th>辦理單位</th> <th>開班單位</th> <th>訓練期間</th> <th>訓練時段</th>  <th>訓練時數</th>  <th>訓練地點</th>  <th>訓練位置</th>  <th>報名日期</th>  <th>甄試日期</th>  <th>負擔費用</th>  <th>聯絡人</th>  <th>聯絡電話</th>  <th>課程名稱 <th>期別</th>  <th>課程代碼</th> <th>訓練概要</th> <th>課程內容</th></tr>";
     foreach ($tables as $table)
     {
@@ -74,11 +75,26 @@
 
         // insert data to mysql
         $sql="INSERT INTO course(organizer,class,session,time,hours,place,location,signdate,testdate,cost,poc,phone,classname,period,code,summary,content)VALUES('$org','$class','$session','$time','$hours','$place','$location','$signdate','$testdate','$cost','$poc','$phone','$classname','$period','$code','$summary','$content')";
+        $insert = mysqli_query( $conn, $sql );
+        
+       
         /*if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }*/
+
+        
+        /*if($stmt = $conn->prepare($sql)){
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while($rows = $result->fetch_assoc()){
+                //$sq = "UPDATE course SET career = '製造業' WHERE summary LIKE '%半導體%'";
+            echo "123";
+            }
+        }*/
+        //echo $sql."<br>";
     }
     echo "Number: ".$row;
     //echo "<hr>";
@@ -137,3 +153,7 @@
             //print_r($xml);
 $conn->close();
 ?> 
+
+
+    
+
